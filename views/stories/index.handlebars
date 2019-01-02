@@ -1,4 +1,19 @@
-<h1>Stories</h1>
+<h1 class='center-align'>Feed</h1>
+<div class="container">
+    <div class="row">
+        <div id="custom-search-input">
+            <div class="input-group col-md-12">
+                <input type="text" class="  search-query form-control" placeholder="Search" />
+                <span class="input-group-btn">
+                    <button class="btn btn-danger" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+{{!-- <br><br><br> --}}
 <div class="row">
     {{#each stories}}
     <div class="col s12 m4">
@@ -17,12 +32,14 @@
                     <a href="/stories/user/{{user.id}}">{{user.firstName}} {{user.lastName}}</a>
                 </div>
             </div>
+            <h6 class='left-align'>Posted: {{formatDate date 'MMMM Do YYYY'}}</h6>
+
             <div class="card-action center-align">
                 <a class="btn grey" href="/stories/show/{{id}}">Read More</a>
             </div>
         </div>
     </div>
     {{else}}
-    <p>No stories found</p>
+    <p>No feed found</p>
     {{/each}}
 </div>

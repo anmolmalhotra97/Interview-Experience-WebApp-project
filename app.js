@@ -16,6 +16,8 @@ require("./models/story");
 require("./config/passport")(passport);
 
 // Load Routes
+const users = require("./routes/users");
+
 const index = require("./routes/index");
 const auth = require("./routes/auth");
 const stories = require("./routes/stories");
@@ -94,6 +96,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", index);
 app.use("/auth", auth);
 app.use("/stories", stories);
+app.use("/users", users);
 
 const port = process.env.PORT || 5000;
 

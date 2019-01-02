@@ -3,30 +3,18 @@
         <h3>{{story.title}}
             <small>{{{editIcon story.user.id user.id story.id false}}}</small>
         </h3>
+        <h6 class='right-align'>Posted: {{formatDate story.date 'MMMM Do YYYY'}}</h6>
+
         <div class="card story">
             <div class="card-content">
-                <span class="card-title">{{formatDate story.date 'MMMM Do YYYY'}}</span>
                 {{{story.body}}}
             </div>
+
         </div>
 
+        <li class="divider"></li>
+        <h3>Answers: </h3>
         {{#if story.allowComments}}
-        <div class="card">
-            <div class="card-content">
-                <span class="card-title">Comments</span>
-                {{#if user}}
-                <form method="post" action="/stories/comment/{{story.id}}">
-                    <div class="input-field">
-                        <textarea name="commentBody" class="materialize-textarea"></textarea>
-                        <label> Add Comment</label>
-                    </div>
-                    <input type="submit" value="Submit" class="btn">
-                </form>
-                {{else}}
-                <p>Please <a href="/auth/google">log</a> in to leave a comment</p>
-                {{/if}}
-            </div>
-        </div>
 
         {{#each story.comments}}
         <div class="card">
@@ -43,6 +31,23 @@
             </div>
         </div>
         {{/each}}
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Your Answer</span>
+                {{#if user}}
+                <form method="post" action="/stories/comment/{{story.id}}">
+                    <div class="input-field">
+                        <textarea name="commentBody" class="materialize-textarea"></textarea>
+                        <label> Add Answer</label>
+                    </div>
+                    <input type="submit" value="Submit" class="btn">
+                </form>
+                {{else}}
+                <p>Please <a href="/auth/google">log</a> in to leave an Answer to this post</p>
+                {{/if}}
+            </div>
+        </div>
+
         {{/if}}
     </div>
     <div class="col s12 m4">
