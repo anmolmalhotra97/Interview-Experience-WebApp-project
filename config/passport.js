@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const keys = require("./keys");
 //load user model
 const User = mongoose.model("users");
-module.exports = function(passport) {
-  passport.use(
+module.exports = function(passport_google) {
+  passport_google.use(
     new GoogleStrategy(
       {
         clientID: keys.googleClientID,
@@ -25,11 +25,13 @@ module.exports = function(passport) {
           firstName: profile.name.givenName,
           lastName: profile.name.familyName,
           email: profile.emails[0].value,
+          password: "",
           image: image
         };
+
         //check for user
         User.findOne({
-          googleID: profile.id
+          email: profile.emails[0].value
         })
           .then(user => {
             if (user) {
@@ -47,10 +49,10 @@ module.exports = function(passport) {
       }
     )
   );
-  passport.serializeUser((user, done) => {
+  passport_google.serializeUser((user, done) => {
     done(null, user.id);
   });
-  passport.deserializeUser((id, done) => {
+  passport_google.deserializeUser((id, done) => {
     User.findById(id).then(user => done(null, user));
   });
 };

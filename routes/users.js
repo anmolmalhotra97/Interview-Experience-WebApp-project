@@ -21,7 +21,7 @@ router.get("/register", (req, res) => {
 // Login Form POST
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", {
-    successRedirect: "/ideas",
+    successRedirect: "/stories",
     failureRedirect: "/users/login",
     failureFlash: true
   })(req, res, next);
@@ -42,7 +42,8 @@ router.post("/register", (req, res) => {
   if (errors.length > 0) {
     res.render("users/register", {
       errors: errors,
-      name: req.body.name,
+      fname: req.body.fname,
+      lame: req.body.lame,
       email: req.body.email,
       password: req.body.password,
       password2: req.body.password2
@@ -50,26 +51,60 @@ router.post("/register", (req, res) => {
   } else {
     User.findOne({ email: req.body.email }).then(user => {
       if (user) {
-        req.flash("error_msg", "Email already regsitered");
-        res.redirect("/users/register");
+        console.log("email already registered");
+        // req.flash("error_msg", "Email already regsitered");
+        if (user.password == "") {
+          bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(req.body.password, salt, (err, hash) => {
+              // if (err) throw err;
+              req.body.password = hash;
+              user.password = req.body.password;
+              user
+                .save()
+                .then(user => {
+                  console.log("successfully registered");
+                  // req.flash(
+                  //   "success_msg",
+                  //   "You are now registered and can log in"
+                  // );
+                  res.redirect("/users/login");
+                })
+                .catch(err => {
+                  console.log(err);
+                  return;
+                });
+            });
+          });
+        } else {
+          console.log("both logins were set but still an attempt was made");
+          res.redirect("/users/login");
+        }
+        // user.password = req.body.password;
+        // user.save().then(user => {
+        //   res.redirect("/users/login");
+        // });
       } else {
         const newUser = new User({
-          name: req.body.name,
+          googleID: Date.now(),
+          firstName: req.body.fname,
+          lastName: req.body.lname,
           email: req.body.email,
-          password: req.body.password
+          password: req.body.password,
+          image: ""
         });
 
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) throw err;
+            // if (err) throw err;
             newUser.password = hash;
             newUser
               .save()
               .then(user => {
-                req.flash(
-                  "success_msg",
-                  "You are now registered and can log in"
-                );
+                console.log("successfully registered");
+                // req.flash(
+                //   "success_msg",
+                //   "You are now registered and can log in"
+                // );
                 res.redirect("/users/login");
               })
               .catch(err => {
@@ -86,7 +121,7 @@ router.post("/register", (req, res) => {
 //Logout User
 router.get("/logout", (req, res) => {
   req.logOut();
-  req.flash("success", "You are logged out");
+  // req.flash("success", "You are logged out");
   res.redirect("/users/login");
 });
 module.exports = router;

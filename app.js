@@ -1,12 +1,14 @@
 const express = require("express");
 const path = require("path");
 const exphbs = require("express-handlebars");
-const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
+const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const cookieParser = require("cookie-parser");
+const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require("passport");
+const cookieParser = require("cookie-parser");
+const app = express();
 
 // Load Models
 require("./models/user");
@@ -14,6 +16,7 @@ require("./models/story");
 
 // Passport Config
 require("./config/passport")(passport);
+require("./config/passport_local")(passport);
 
 // Load Routes
 const users = require("./routes/users");
@@ -45,8 +48,6 @@ mongoose
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log(err));
 
-const app = express();
-
 // Body Parser Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -68,8 +69,6 @@ app.engine(
     defaultLayout: "main"
   })
 );
-app.set("view engine", "handlebars");
-
 app.use(cookieParser());
 app.use(
   session({
@@ -78,6 +77,17 @@ app.use(
     saveUninitialized: false
   })
 );
+app.use(flash());
+//global variables
+app.use(function(req, res, next) {
+  res.locals.success_msg = req.flash("success_msg");
+  res.locals.error_msg = req.flash("error_msg");
+  res.locals.error = req.flash("error");
+  res.locals.user = req.user || null;
+  next();
+});
+
+app.set("view engine", "handlebars");
 
 // Passport Middleware
 app.use(passport.initialize());

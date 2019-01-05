@@ -14,7 +14,7 @@ router.get(
     console.log(req.method + "    " + req.url);
 
     // Successful authentication, redirect home.
-    res.redirect("/dashboard");
+    res.redirect("/stories");
   }
 );
 
