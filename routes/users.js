@@ -127,7 +127,7 @@ router.put("/edit/:id", (req, res) => {
     errors.push({ text: "Passwords do not match" });
   }
 
-  if (req.body.password.length < 4) {
+  if (req.body.password.length < 4 && req.body.password.length != 0) {
     errors.push({ text: "Password must be at least 4 characters" });
   }
 
@@ -144,30 +144,41 @@ router.put("/edit/:id", (req, res) => {
       _id: req.params.id
     }).then(user => {
       // New values
-      (user.firstName = req.body.fname),
-        (user.lastName = req.body.lname),
-        (user.password = req.body.password);
+      user.firstName = req.body.fname;
+      user.lastName = req.body.lname;
+      if (req.body.password.length != 0) {
+        user.password = req.body.password;
 
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(user.password, salt, (err, hash) => {
-          // if (err) throw err;
-          user.password = hash;
-          user
-            .save()
-            .then(user => {
-              console.log("information eddited successfully");
-              // req.flash(
-              //   "success_msg",
-              //   "You are now registered and can log in"
-              // );
-              res.redirect("/users/edit");
-            })
-            .catch(err => {
-              console.log(err);
-              return;
-            });
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(user.password, salt, (err, hash) => {
+            // if (err) throw err;
+            user.password = hash;
+            user
+              .save()
+              .then(user => {
+                console.log("information eddited successfully");
+                // req.flash(
+                //   "success_msg",
+                //   "You are now registered and can log in"
+                // );
+                res.redirect("/users/edit");
+              })
+              .catch(err => {
+                console.log(err);
+                return;
+              });
+          });
         });
-      });
+      } else {
+        user.save().then(user => {
+          console.log("information eddited successfully");
+          // req.flash(
+          //   "success_msg",
+          //   "You are now registered and can log in"
+          // );
+          res.redirect("/users/edit");
+        });
+      }
     });
   }
 });
