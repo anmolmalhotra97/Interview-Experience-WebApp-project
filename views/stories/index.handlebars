@@ -1,5 +1,5 @@
 <h1 class='center-align'>Feed</h1>
-<div class="container">
+{{!-- <div class="container">
     <div class="row">
         <div id="custom-search-input">
             <div class="input-group col-md-12">
@@ -12,8 +12,7 @@
             </div>
         </div>
     </div>
-</div>
-{{!-- <br><br><br> --}}
+</div> --}}
 <div class="row">
     {{#each stories}}
     <div class="col s12 m4">
@@ -24,7 +23,7 @@
                 {{/if}}
             </div>
             <div class="card-content center-align">
-                <h5>{{title}}</h5>
+                <h5 class='story-title'>{{title}}</h5>
                 <p class="story-text">{{stripTags (truncate body 150)}}</p>
                 <br>
                 <div class="chip">

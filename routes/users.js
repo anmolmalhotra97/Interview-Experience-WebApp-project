@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const router = express.Router();
+const { ensureAuthenticated, ensureGuest } = require("../helpers/auth");
 
 // Load User Model
 require("../models/user");
@@ -116,6 +117,64 @@ router.post("/register", (req, res) => {
       }
     });
   }
+});
+
+//edit user info
+router.put("/edit/:id", (req, res) => {
+  let errors = [];
+
+  if (req.body.password != req.body.password2) {
+    errors.push({ text: "Passwords do not match" });
+  }
+
+  if (req.body.password.length < 4) {
+    errors.push({ text: "Password must be at least 4 characters" });
+  }
+
+  if (errors.length > 0) {
+    res.render("users/edit", {
+      errors: errors,
+      fname: req.body.fname,
+      lame: req.body.lame,
+      password: req.body.password,
+      password2: req.body.password2
+    });
+  } else {
+    User.findOne({
+      _id: req.params.id
+    }).then(user => {
+      // New values
+      (user.firstName = req.body.fname),
+        (user.lastName = req.body.lname),
+        (user.password = req.body.password);
+
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(user.password, salt, (err, hash) => {
+          // if (err) throw err;
+          user.password = hash;
+          user
+            .save()
+            .then(user => {
+              console.log("information eddited successfully");
+              // req.flash(
+              //   "success_msg",
+              //   "You are now registered and can log in"
+              // );
+              res.redirect("/users/edit");
+            })
+            .catch(err => {
+              console.log(err);
+              return;
+            });
+        });
+      });
+    });
+  }
+});
+
+// User information change Route
+router.get("/edit", ensureAuthenticated, (req, res) => {
+  res.render("users/edit");
 });
 
 //Logout User

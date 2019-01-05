@@ -1,0 +1,35 @@
+{{#each errors}}
+<span class="danger">{{errors}}</span>
+{{/each}}
+<h1>Edit Your Information</h1>
+<div class="row">
+    <form action="/users/edit/{{user.id}}?_method=PUT" method="post" class="col s12">
+        <input type="hidden" name="_method" value="PUT">
+        <div class="row">
+            <div class="input-field">
+                <input type="text" name="fname" value="{{user.firstName}}">
+                <label for="fname">First Name</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field">
+                <input type="text" name="lname" value="{{user.lastName}}">
+                <label for="lname">Last Name</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field">
+                <input type="password" name="password">
+                <label for="password">Type your new Password</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field">
+                <input type="password" name="password2">
+                <label for="password2">Confirm Your new Password</label>
+            </div>
+        </div>
+
+        <input type="submit" value="Save" class="btn">
+    </form>
+</div>

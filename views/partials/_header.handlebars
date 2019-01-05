@@ -6,8 +6,8 @@
       <!-- RIGHT NAV -->
       <ul class="right hide-on-small-only">
         {{#if user}}
-        <li><a href="/dashboard">Welcome {{user.firstName}}</a></li>
-        <li><a href="/auth/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+        <li><a href="/users/edit">Welcome {{user.firstName}}</a></li>
+        <li><a href="/users/login"><i class="fa fa-sign-out"></i> Logout</a></li>
         {{else}}
         <li><a href="/stories"><i class="fa fa-book"></i> Public Feed</a></li>
         {{/if}}
@@ -18,6 +18,10 @@
         {{else}}
         <li>
           <a class="btn red darken-1" href="/auth/google"><i class="fa fa-google left"></i> Login With Google</a>
+        </li>
+        <li class="divider"></li>
+        <li>
+          <a class="btn blue darken-1" href="/users/login"><i class="fa fa-user"></i> Login</a>
         </li>
         {{/if}}
         <li><a href="/stories"><i class="fa fa-book"></i> Public Feed</a></li>

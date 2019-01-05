@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col s12 m8">
-        <h3>{{story.title}}
+        <h2>{{story.title}}
             <small>{{{editIcon story.user.id user.id story.id false}}}</small>
-        </h3>
+        </h2>
         <h6 class='right-align'>Posted: {{formatDate story.date 'MMMM Do YYYY'}}</h6>
 
         <div class="card story">
@@ -43,7 +43,7 @@
                     <input type="submit" value="Submit" class="btn">
                 </form>
                 {{else}}
-                <p>Please <a href="/auth/google">log</a> in to leave an Answer to this post</p>
+                <p>Please <a href="/users/login">Log in</a> to leave an Answer to this post</p>
                 {{/if}}
             </div>
         </div>
