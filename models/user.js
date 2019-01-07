@@ -22,7 +22,12 @@ const UserSchema = new Schema({
   },
   password: {
     type: String
-  }
+  },
+  tags: [
+    {
+      type: String
+    }
+  ]
 });
 
 //create collection and add schema

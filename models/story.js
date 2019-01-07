@@ -19,6 +19,11 @@ const StorySchema = new Schema({
     type: Boolean,
     default: true
   },
+  related: [
+    {
+      type: String
+    }
+  ],
   comments: [
     {
       commentBody: {

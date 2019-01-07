@@ -96,17 +96,18 @@ router.post("/", (req, res) => {
   } else {
     allowComments = false;
   }
-
-  const newStory = {
+  const newStory = new Story({
     title: req.body.title,
     body: req.body.body,
     status: req.body.status,
     allowComments: allowComments,
     user: req.user.id
-  };
-
+  });
+  if (req.body.java) newStory.related.push("java");
+  if (req.body.ds) newStory.related.push("ds");
+  if (req.body.cpp) newStory.related.push("cpp");
   // Create Story
-  new Story(newStory).save().then(story => {
+  newStory.save().then(story => {
     res.redirect(`/stories/show/${story.id}`);
   });
 });
@@ -116,14 +117,24 @@ router.put("/:id", (req, res) => {
   Story.findOne({
     _id: req.params.id
   }).then(story => {
-    let allowComments;
+    let allowComments = false;
 
     if (req.body.allowComments) {
       allowComments = true;
-    } else {
-      allowComments = false;
     }
-
+    story.related.pop();
+    story.related.pop();
+    story.related.pop();
+    story.related.pop();
+    if (req.body.java) {
+      story.related.push("java");
+    }
+    if (req.body.ds) {
+      story.related.push("data-structure");
+    }
+    if (req.body.cpp) {
+      story.related.push("cpp");
+    }
     // New values
     story.title = req.body.title;
     story.body = req.body.body;

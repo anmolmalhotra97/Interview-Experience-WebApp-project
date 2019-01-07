@@ -29,6 +29,18 @@
                 <label for="filled-in-box">Allow Answers</label>
             </p>
         </div>
+        <div class="row">
+            <input type="checkbox" name="ds" id="ds" class='filled-in' {{#if story.allowDs}} checked="checked" {{/if}}>
+            <label for="ds">Data-Structures</label>
+
+            <input type="checkbox" name="java" id="java" class='filled-in' {{#if story.allowJava}} checked="checked"
+                {{/if}}>
+            <label for="java">JAVA</label>
+
+            <input type="checkbox" name="cpp" id="cpp" class='filled-in' {{#if story.allowCpp}} checked="checked"
+                {{/if}}>
+            <label for="cpp">C++</label>
+        </div>
 
         <div class="row">
             <div class="input-field">

@@ -93,6 +93,9 @@ router.post("/register", (req, res) => {
           password: req.body.password,
           image: ""
         });
+        if (req.body.java) newUser.tags.push("java");
+        if (req.body.ds) newUser.tags.push("data-structure");
+        if (req.body.cpp) newUser.tags.push("cpp");
 
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -146,6 +149,13 @@ router.put("/edit/:id", (req, res) => {
       // New values
       user.firstName = req.body.fname;
       user.lastName = req.body.lname;
+      user.tags.pop();
+      user.tags.pop();
+      user.tags.pop();
+      user.tags.pop();
+      if (req.body.java) user.tags.push("java");
+      if (req.body.ds) user.tags.push("data-structure");
+      if (req.body.cpp) user.tags.push("cpp");
       if (req.body.password.length != 0) {
         user.password = req.body.password;
 
