@@ -32,38 +32,52 @@ footer {
   display: inline;
 }
 
-/* #custom-search-input {
-  margin: 0;
-  margin-top: 10px;
-  padding: 0;
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+body {
+  background: #f2f2f2;
+  font-family: "Open Sans", sans-serif;
 }
 
-#custom-search-input .search-query {
-  padding-right: 3px;
-  padding-right: 4px \9;
-  padding-left: 3px;
-  padding-left: 4px \9;
-
-  margin-bottom: 0;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
-
-#custom-search-input button {
-  border: 0;
-  background: none;
-  padding: 2px 5px;
-  margin-top: 2px;
+.search {
+  width: 100%;
   position: relative;
-  left: -28px;
-  margin-bottom: 0;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  color: #d9230f;
 }
 
-.search-query:focus + button {
-  z-index: 3;
-} */
+.searchTerm {
+  float: left;
+  width: 100%;
+  border: 3px solid #00b4cc;
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px;
+  outline: none;
+  color: #9dbfaf;
+}
+
+.searchTerm:focus {
+  color: #00b4cc;
+}
+
+.searchButton {
+  position: absolute;
+  right: -50px;
+  width: 40px;
+  height: 36px;
+  border: 1px solid #00b4cc;
+  background: #00b4cc;
+  text-align: center;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/*Resize the wrap to see the search bar change!*/
+.wrap {
+  width: 30%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

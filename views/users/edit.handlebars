@@ -1,35 +1,50 @@
 {{#each errors}}
 <span class="danger">{{errors}}</span>
 {{/each}}
-<h1>Edit Your Information</h1>
 <div class="row">
-    <form action="/users/edit/{{user.id}}?_method=PUT" method="post" class="col s12">
-        <input type="hidden" name="_method" value="PUT">
+    <div class="col s12 m8">
+        <h1>Edit Your Information</h1>
         <div class="row">
-            <div class="input-field">
-                <input type="text" name="fname" value="{{user.firstName}}">
-                <label for="fname">First Name</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field">
-                <input type="text" name="lname" value="{{user.lastName}}">
-                <label for="lname">Last Name</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field">
-                <input type="password" name="password">
-                <label for="password">Type your new Password</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field">
-                <input type="password" name="password2">
-                <label for="password2">Confirm Your new Password</label>
-            </div>
-        </div>
+            <form action="/users/edit/{{user.id}}?_method=PUT" method="post" class="col s12">
+                <input type="hidden" name="_method" value="PUT">
+                <div class="row">
+                    <div class="input-field">
+                        <input type="text" name="fname" value="{{user.firstName}}">
+                        <label for="fname">First Name</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field">
+                        <input type="text" name="lname" value="{{user.lastName}}">
+                        <label for="lname">Last Name</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field">
+                        <input type="password" name="password">
+                        <label for="password">Type your new Password</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field">
+                        <input type="password" name="password2">
+                        <label for="password2">Confirm Your new Password</label>
+                    </div>
+                </div>
 
-        <input type="submit" value="Save" class="btn">
-    </form>
+                <input type="submit" value="Save" class="btn">
+            </form>
+        </div>
+    </div>
+    <div class="col s12 m4">
+        <div class="card center-align">
+            <div class="card-content">
+                <span class="card-title">Profile Image</span>
+                <img src="{{user.image}}" class="circle responsive-img">
+            </div>
+            <div class="card-action">
+                <a href="/stories/user/{{user.id}}">More From {{user.firstName}}</a>
+            </div>
+        </div>
+    </div>
 </div>
