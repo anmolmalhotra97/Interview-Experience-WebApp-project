@@ -5,6 +5,28 @@ const Story = mongoose.model("stories");
 const User = mongoose.model("users");
 const { ensureAuthenticated, ensureGuest } = require("../helpers/auth");
 
+router.post("/search", (req, res) => {
+  if (req.body.search != "") {
+    Story.find({ related: { $in: [req.body.search] }, status: "public" })
+      .populate("user")
+      .sort({ date: "desc" })
+      .then(stories => {
+        res.render("stories/index", {
+          search: req.body.search,
+          stories: stories
+        });
+      });
+  } else {
+    Story.find({ status: "public" })
+      .populate("user")
+      .sort({ date: "desc" })
+      .then(stories => {
+        res.render("stories/index", {
+          stories: stories
+        });
+      });
+  }
+});
 // Stories Index
 router.get("/", (req, res) => {
   Story.find({ status: "public" })
